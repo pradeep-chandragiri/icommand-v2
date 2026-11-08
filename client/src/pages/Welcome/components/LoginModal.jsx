@@ -53,7 +53,7 @@ const LoginModal = ({ onClose }) => {
                     password: ''
                 });
                 setUser(response.data.user);
-                navigate('/app', { replace: true });
+                navigate('/chat', { replace: true });
             }
 
         } catch (error) {
