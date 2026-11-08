@@ -19,7 +19,7 @@ app.use(cookieParser());
 // database connection
 connectDB();
 
-app.get('/api/health', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Server is working fine.');
 })
 
