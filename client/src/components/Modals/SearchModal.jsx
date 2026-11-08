@@ -10,32 +10,35 @@ const SearchModal = ({ showSearch }) => {
         "Schema Designing Tutorial",
         "Page Name Recommendations",
         "Generate Mobile Image"
-    ];
+    ]
 
     return (
-        <div className='search-container'>
-            <div className="search-modal">
-                {/* Search Header */}
-                <div className="search-header">
-                    <input type="text" placeholder="Search..." className="search-input" />
+        <div className="search-modal">
+            <div className="search-modal__content">
 
-                    <span className="search-close" onClick={ () => showSearch(false) }>
+                {/* Search Header */}
+                <div className="search-modal__header">
+                    <input type="text" placeholder="Search..." className="search-modal__input" />
+
+                    <button type="button" className="search-modal__close" onClick={() => showSearch(false)}>
                         <X size={18} strokeWidth={1.6} />
-                    </span>
+                    </button>
                 </div>
 
                 {/* Recent Chats */}
-                <div className="search-content">
-                    <p className="search-label">Recent chats</p>
-                    <div className="search-list">
+                <div className="search-modal__body">
+                    <p className="search-modal__label">Recent chats</p>
+
+                    <div className="search-modal__list">
                         {recentChats.map((chat, index) => (
-                            <div className={`search-item ${index === 0 ? 'active' : ''}`} key={index}>
+                            <div className={`search-modal__item ${index === 0 ? 'search-modal__item--active' : ''}`} key={index}>
                                 <MessageCircle size={17} strokeWidth={1.6} />
                                 <span>{chat}</span>
                             </div>
                         ))}
                     </div>
                 </div>
+
             </div>
         </div>
     )

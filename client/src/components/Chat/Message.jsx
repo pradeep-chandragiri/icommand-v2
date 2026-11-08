@@ -1,11 +1,19 @@
-import React from 'react'
+import React from 'react';
 
-const Message = () => {
+const Message = ({ data }) => {
+
+    const isUser = data.role === 'user';
+
     return (
-        <div>
-        
-        </div>
-    )
-}
+        <div className={`message ${isUser ? 'message--user' : 'message--assistant'}`}>
 
-export default Message
+            <div className="message__content">
+                <p className="message__text">{data.content}</p>
+                <span className="message__time">{data.time}</span>
+            </div>
+
+        </div>
+    );
+};
+
+export default Message;

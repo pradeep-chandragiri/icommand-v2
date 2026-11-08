@@ -1,38 +1,46 @@
 import React from 'react'
-import { MessageCirclePlus, Search, CircleUser, Astroid } from 'lucide-react'
+import { MessageCirclePlus, Search, CircleUser, House } from 'lucide-react'
 
 const SidebarNavbar = ({ showNewChat, showSearch, showProfile }) => {
+
     return (
-        <>
-            <nav>
-                <ul className='nav-links'>
-                    <li className='nav-link nav-hidden active'>
-                        <span className='nl-icon'>
-                            <Astroid size={22} />
-                        </span>
-                        <span className='nl-label'>Home</span>
-                    </li>
-                    <li className='nav-link' onClick={() => showNewChat(true)}>
-                        <span className='nl-icon'>
-                            <MessageCirclePlus size={22} />
-                        </span>
-                        <span className='nl-label'>New chat</span>
-                    </li>
-                    <li className='nav-link' onClick={() => showSearch(true)}>
-                        <span className='nl-icon'>
-                            <Search size={22} />
-                        </span>
-                        <span className='nl-label'>Search chats</span>
-                    </li>
-                    <li className='nav-link' onClick={() => showProfile(true)}>
-                        <span className='nl-icon'>
-                            <CircleUser size={22} />
-                        </span>
-                        <span className='nl-label'>Your profile</span>
-                    </li>
-                </ul>
-            </nav>
-        </>
+        <nav className="sidebar-nav">
+            <ul className="sidebar-nav__list">
+
+                {/* Home */}
+                <li className="sidebar-nav__item sidebar-nav__item--active sidebar-nav__item--mobile">
+                    <span className="sidebar-nav__icon">
+                        <House size={22} />
+                    </span>
+                    <span className="sidebar-nav__label">Home</span>
+                </li>
+
+                {/* New Chat */}
+                <li className="sidebar-nav__item" onClick={() => showNewChat(true)}>
+                    <span className="sidebar-nav__icon">
+                        <MessageCirclePlus size={22} />
+                    </span>
+                    <span className="sidebar-nav__label">New chat</span>
+                </li>
+
+                {/* Search */}
+                <li className="sidebar-nav__item" onClick={() => showSearch(true)}>
+                    <span className="sidebar-nav__icon">
+                        <Search size={22} />
+                    </span>
+                    <span className="sidebar-nav__label">Search chats</span>
+                </li>
+
+                {/* Profile */}
+                <li className="sidebar-nav__item" onClick={() => showProfile(true)}>
+                    <span className="sidebar-nav__icon">
+                        <CircleUser size={22} />
+                    </span>
+                    <span className="sidebar-nav__label">Your profile</span>
+                </li>
+
+            </ul>
+        </nav>
     )
 }
 

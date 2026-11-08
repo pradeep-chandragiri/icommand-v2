@@ -2,32 +2,35 @@ import React from 'react'
 import { X } from 'lucide-react'
 
 const NewChatModal = ({ showNewChat }) => {
+
     return (
-        <div className='new-chat-container'>
-            <div className="new-chat-modal">
+        <div className="new-chat-modal">
+            <div className="new-chat-modal__content">
 
                 {/* Header */}
-                <div className="new-chat-header">
-                    <h2>Create new chat</h2>
-                    <span className="new-chat-close" onClick={ () => showNewChat(false) }>
+                <div className="new-chat-modal__header">
+                    <h2 className="new-chat-modal__title">Create new chat</h2>
+
+                    <button type="button" className="new-chat-modal__close" onClick={() => showNewChat(false)}>
                         <X size={17} strokeWidth={1.5} />
-                    </span>
+                    </button>
                 </div>
 
                 {/* Description */}
-                <p className="new-chat-description">Keep it short and recognizable</p>
+                <p className="new-chat-modal__description">Keep it short and recognizable</p>
 
                 {/* Input */}
-                <input type="text" className="new-chat-input" placeholder="Enter chat name" />
+                <input type="text" className="new-chat-modal__input" placeholder="Enter chat name" />
 
                 {/* Actions */}
-                <div className="new-chat-actions">
-                    <button className="new-chat-cancel" 
-                        onClick={ () => showNewChat(false) }
-                    >
+                <div className="new-chat-modal__actions">
+                    <button type="button" className="new-chat-modal__cancel" onClick={() => showNewChat(false)}>
                         Cancel
                     </button>
-                    <button className="new-chat-save">Save</button>
+
+                    <button type="button" className="new-chat-modal__save">
+                        Save
+                    </button>
                 </div>
 
             </div>
