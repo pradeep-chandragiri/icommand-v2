@@ -294,7 +294,7 @@ nav {
     }
 
     .chat-item {
-        padding: 12px 15px;
+        padding: 16px 15px;
         display: block;
         border-radius: 0;
         border-bottom: 1px solid var(--border-lt);
@@ -340,16 +340,16 @@ nav {
         width: auto;
         height: 64px;
         padding: 7px;
-        border-radius: 50px;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        background: rgba(255, 255, 255, 0.18);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-color: rgba(255, 255, 255, 0.28);
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-radius: 60Q;
+        border: 1px solid rgba(255, 255, 255, 0.18);
         box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     }
 
@@ -404,9 +404,9 @@ nav {
     @media screen and (max-width: 480px) {
         .nav-links {
             background: rgba(20, 25, 35, 0.55);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-color: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }   
     }
 }
