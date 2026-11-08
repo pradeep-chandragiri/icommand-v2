@@ -1,0 +1,369 @@
+/* DESIGN TOKENS */
+:root {
+    /* Typography */
+    --font-regular: 'Outfit', sans-serif;
+    --font-heading: 'Cagliostro', sans-serif;
+
+    --font-sm: 14px;
+    --font-md: 15px;
+    --font-lg: 20px;
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Background Colors */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F6F8FA;
+    --bg-tertiary: #EAEEF2;
+
+    /* Border Colors */
+    --border-lt: #D1D9E0;
+    --border-md: #AFB8C1;
+    --border-st: #818B98;
+
+    /* Text Colors */
+    --color-primary: #1F2328;
+    --color-secondary: #59636E;
+    --color-tertiary: #818B98;
+
+    /* Accent Colors */
+    --accent-primary: linear-gradient(135deg, #545aff, #0969DA);
+    --accent-dark: linear-gradient(135deg, #0969DA, #033D8B);
+    --accent-blue: linear-gradient(135deg, #58A6FF, #1F6FEB);
+    --accent-translucent: rgba(14, 47, 233, 0.191);
+
+    /* Semantic Colors */
+    --accent-danger: linear-gradient(135deg, #ff1c1c, #CF222E);
+    --accent-warning: linear-gradient(135deg, #fad360, #ffd000);
+    --accent-success: linear-gradient(135deg, #4AC26B, #1F883D);
+}
+
+/* DARK THEME */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #0D1117;
+        --bg-secondary: #161B22;
+        --bg-tertiary: #21262D;
+
+        --border-lt: #21262D;
+        --border-md: #30363D;
+        --border-st: #484F58;
+
+        --color-primary: #F0F6FC;
+        --color-secondary: #C9D1D9;
+        --color-tertiary: #8B949E;
+
+        /* Accent Colors */
+        --accent-primary: linear-gradient(135deg, #545aff, #0969DA);
+        --accent-dark: linear-gradient(135deg, #0969DA, #033D8B);
+        --accent-blue: linear-gradient(135deg, #58A6FF, #1F6FEB);
+        --accent-translucent: rgba(14, 14, 233, 0.275);
+
+        /* Semantic Colors */
+        --accent-danger: linear-gradient(135deg, #ff1c1c, #CF222E);
+        --accent-warning: linear-gradient(135deg, #fad360, #ffd000);
+        --accent-success: linear-gradient(135deg, #4AC26B, #1F883D);
+    }
+
+}
+
+/* GLOBAL RESET */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.5;
+    font-family: var(--font-regular);
+    font-size: var(--font-md);
+    color: var(--color-primary);
+    background: var(--bg-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* TYPOGRAPHY */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-primary);
+    font-size: var(--font-lg);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.25;
+}
+
+p {
+    color: var(--color-secondary);
+    font-size: var(--font-md);
+}
+
+small {
+    color: var(--color-tertiary);
+    font-size: var(--font-sm);
+}
+
+strong,
+b {
+    font-weight: var(--font-weight-semibold);
+}
+
+em,
+i {
+    font-style: italic;
+}
+
+code,
+pre {
+    font-family: monospace;
+    font-size: var(--font-sm);
+}
+
+pre {
+    overflow-x: auto;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--border-lt);
+}
+
+/* LINKS */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* BUTTON DEFAULTS */
+button {
+    border: none;
+    background: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: var(--font-md);
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* FORM ELEMENTS */
+input,
+textarea,
+select {
+    border: 1px solid var(--border-md);
+    outline: none;
+    background: var(--bg-primary);
+    color: var(--color-primary);
+    font-family: inherit;
+    font-size: var(--font-md);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-tertiary);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #0969DA;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: #2DA44E;
+    cursor: pointer;
+}
+
+/* MEDIA ELEMENTS */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+/* LISTS & SELECTION */
+ul,
+ol {
+    list-style: none;
+}
+
+::selection {
+    background: var(--bg-secondary);
+}
+
+/* BUTTON COMPONENT */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 4px 18px;
+    border: 1px solid transparent;
+    color: var(--color-primary);
+    font-family: var(--font-regular);
+    font-size: var(--font-md);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        filter 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Button Variants */
+.btn-primary {
+    background: var(--accent-primary);
+    color: #FFFFFF;
+}
+
+.btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--color-primary);
+    border-color: var(--border-lt);
+}
+
+.btn-danger {
+    background: var(--accent-danger);
+    color: #FFFFFF;
+}
+
+.btn-success {
+    background: var(--accent-success);
+    color: #FFFFFF;
+}
+
+.btn-blue {
+    background: var(--accent-blue);
+    color: #FFFFFF;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--border-md);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--color-primary);
+}
+
+/* Button Shapes */
+.btn-rectangular {
+    border-radius: 6px;
+}
+
+.btn-rounded {
+    border-radius: 50px;
+}
+
+.btn-circle {
+    border-radius: 50%;
+    padding: 0;
+}
+
+/* Button Sizes */
+.btn-small {
+    min-height: 32px;
+    padding: 6px 12px;
+    font-size: var(--font-sm);
+}
+
+.btn-medium {
+    min-height: 40px;
+    padding: 9px 18px;
+    font-size: var(--font-md);
+}
+
+.btn-large {
+    min-height: 48px;
+    padding: 12px 24px;
+    font-size: var(--font-lg);
+}
+
+/* Circular Button Sizes */
+.btn-circle.btn-small {
+    width: 32px;
+    height: 32px;
+}
+
+.btn-circle.btn-medium {
+    width: 40px;
+    height: 40px;
+}
+
+.btn-circle.btn-large {
+    width: 48px;
+    height: 48px;
+}
+
+/* Button States */
+.btn:hover:not(:disabled) {
+    filter: brightness(0.95);
+}
+
+.btn:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.btn:focus-visible {
+    outline: 3px solid #0969DA;
+    outline-offset: 3px;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
