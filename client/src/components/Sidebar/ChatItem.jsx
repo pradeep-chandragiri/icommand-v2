@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Trash } from 'lucide-react'
 import DeleteModal from '../Modals/DeleteModal.jsx'
 
@@ -18,6 +19,7 @@ const ChatItem = ({ data }) => {
 
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const timerRef = useRef(null)
+    const navigate = useNavigate()
 
     // Start long-press timer
     const handleTouchStart = () => {
@@ -41,7 +43,12 @@ const ChatItem = ({ data }) => {
         return avatarColors[hash % avatarColors.length]
     }
 
-    const avatarColor = getAvatarColor(data.title)
+    const avatarColor = getAvatarColor(data.title);
+
+
+    const date = new Date(data.created_at);
+    const month = date.toLocaleString('en-US', { month: 'short' });
+    const formattedDate = date.getDate();
 
     return (
         <>
@@ -52,20 +59,21 @@ const ChatItem = ({ data }) => {
                 onTouchMove={handleTouchEnd}
                 onTouchCancel={handleTouchEnd}
                 onContextMenu={(e) => e.preventDefault()}
+                onClick={ () => navigate(`/chat/${data._id}`) }
             >
 
                 {/* Date Avatar */}
                 <div className="chat-item__avatar">
                     <div className="chat-item__avatar-content" style={{ '--avatar-background': avatarColor }}>
-                        <h2>{data.day}</h2>
-                        <span>{data.month}</span>
+                        <h2>{formattedDate}</h2>
+                        <span>{month}</span>
                     </div>
                 </div>
 
                 {/* Chat Information */}
                 <div className="chat-item__content">
                     <h3 className="chat-item__title">{data.title}</h3>
-                    <p className="chat-item__preview">{data.response}</p>
+                    <p className="chat-item__preview">{data.response ? data.response : 'Start typing message.' }</p>
                 </div>
 
                 {/* Delete Button */}

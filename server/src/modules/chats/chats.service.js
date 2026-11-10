@@ -146,9 +146,55 @@ export const getChatService = async (userid, chatid) => {
 }
 
 export const getAllChatsService = async (userid) => {
-    const chats = await chatsModel.find({ userid }).sort({ created_at: -1 });
+
+    const chats = await chatsModel.aggregate([
+        {
+            $match: { userid }
+        },
+        {
+            $lookup: {
+                from: messagesModel.collection.name,
+                localField: '_id',
+                foreignField: 'chatid',
+                as: 'messages'
+            }
+        },
+        {
+            $addFields: {
+                latestMessage: {
+                    $arrayElemAt: [
+                        {
+                            $sortArray: {
+                                input: '$messages',
+                                sortBy: { created_at: -1 }
+                            }
+                        },
+                        0
+                    ]
+                }
+            }
+        },
+        {
+            $addFields: {
+                response: {
+                    $ifNull: ['$latestMessage.context', 'No messages yet']
+                }
+            }
+        },
+        {
+            $project: {
+                messages: 0,
+                latestMessage: 0
+            }
+        },
+        {
+            $sort: { created_at: -1 }
+        }
+    ]);
+
     return { chats };
-}
+};
+
 
 export const searchChatsService = async (userid, query) => {
     if (typeof query !== 'string' || !query.trim()) {

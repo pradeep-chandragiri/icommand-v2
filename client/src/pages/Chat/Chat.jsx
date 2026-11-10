@@ -1,26 +1,31 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Trash2, X, MoreHorizontal } from 'lucide-react';
 import Message from '../../components/Chat/Message.jsx';
 import ChatBox from '../../components/Chat/ChatBox.jsx';
+import { deleteChat, getChat } from '../../services/chatService.js';
+import { sendMessage } from '../../services/messageService.js';
 
 const Chat = () => {
     const navigate = useNavigate();
     const [showActions, setShowActions] = useState(false);
     const actionsRef = useRef(null);
 
-    const messages = [
-        { id: 1, role: 'user', content: 'Hey, can you explain React components?', time: '10:30 AM' },
-        { id: 2, role: 'assistant', content: 'Absolutely! React components are reusable building blocks of a React application. They allow you to split your UI into independent and reusable pieces.', time: '10:30 AM' },
-        { id: 3, role: 'user', content: 'Can you give me a simple example?', time: '10:31 AM' },
-        { id: 4, role: 'assistant', content: 'Sure! A component is simply a JavaScript function that returns JSX. For example, a Welcome component can return a heading that says Hello World.', time: '10:31 AM' }
-    ];
-
     const handleBack = () => navigate('/chat');
 
-    const handleDelete = () => {
-        setShowActions(false);
-        console.log('Delete conversation');
+    const { chatid } = useParams()
+
+    const handleDelete = async (e) => {
+        try {    
+            const response = await deleteChat(chatid);
+            if (response.success) {
+                navigate('/chat');
+            }
+        } catch (error) {
+            console.error('Chat deletion failed:', error.response?.data || error.message);
+        } finally {
+
+        }
     };
 
     const handleClose = () => {
@@ -28,8 +33,33 @@ const Chat = () => {
         navigate('/chat');
     };
 
-    const handleSend = (message) => {
-        console.log('New message:', message);
+    // msg sending
+    const [chat, setChat] = useState(null);
+    const [messages, setMessages] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSending, setIsSending] = useState(false);
+
+    const handleSend = async (prompt) => {
+
+        try {
+            setIsSending(true);
+
+            const response = await sendMessage(chatid, prompt);
+            if (response.success) {
+                setMessages((prev) => [
+                    ...prev,
+                    response.data.userMessage,
+                    response.data.aiMessage
+                ]);
+            }
+        } catch (error) {
+            console.error(
+                'Message sending failed:',
+                error.response?.data || error.message
+            );
+        } finally {
+            setIsSending(false);
+        }
     };
 
     useEffect(() => {
@@ -47,12 +77,37 @@ const Chat = () => {
         document.addEventListener('touchstart', handleClickOutside);
         document.addEventListener('keydown', handleEscape);
 
+        const fetchChat = async () => {
+            try {
+                setIsLoading(true);
+
+                const response = await getChat(chatid);
+
+                if (response.success) {
+                    setChat(response.data.chat);
+                    setMessages(response.data.messages);
+                }
+            } catch (error) {
+                console.error(
+                    'Failed to fetch chat:',
+                    error.response?.data || error.message
+                );
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        if (chatid) {
+            fetchChat();
+        }
+
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
             document.removeEventListener('touchstart', handleClickOutside);
             document.removeEventListener('keydown', handleEscape);
         };
-    }, []);
+        
+    }, [chatid]);
 
     return (
         <section className="chat">
@@ -62,7 +117,7 @@ const Chat = () => {
                         <ArrowLeft size={19} />
                     </button>
                     <div className="chat__title-container">
-                        <h2 className="chat__title">React Components</h2>
+                        <h2 className="chat__title">{chat?.title || 'New Chat'}</h2>
                     </div>
                 </div>
 
@@ -97,7 +152,13 @@ const Chat = () => {
 
             <main className="chat__messages">
                 <div className="chat__messages-container">
-                    {messages.map((message) => (<Message key={message.id} data={message} />))}
+                    {isLoading ? (
+                        <p>Loading messages...</p>
+                    ) : (
+                        messages.map((message) => (
+                            <Message key={message._id} data={message} />
+                        ))
+                    )}
                 </div>
             </main>
 
